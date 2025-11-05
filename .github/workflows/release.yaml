@@ -8,25 +8,20 @@ on:
 
 jobs:
   test:
-    if: github.repository_owner == 'm00nyONE'
     uses: ./.github/workflows/_tests.yml
-  test-pc:
-    if: github.repository_owner == 'm00nyONE'
-    uses: ./.github/workflows/_tests_pc.yml
-  test-console:
-    if: github.repository_owner == 'm00nyONE'
-    uses: ./.github/workflows/_tests_console.yml
+
   docs:
     if: github.repository_owner == 'm00nyONE'
     uses: ./.github/workflows/_generate-docs.yml
     permissions:
       contents: write
+
   release:
     if: github.repository_owner == 'm00nyONE'
     name: "release"
     runs-on: ubuntu-latest
     permissions: write-all
-    needs: [ 'test' ]
+    needs: [ 'test', 'test-paths']
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
